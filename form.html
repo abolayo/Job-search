@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link href=
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+		rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+            <div class="header">
+                <h3>Update Form</h3>
+            </div>
+        <form action="data.html">
+            <div class="row">
+				<div class="col-lg-6">
+					<div class="mb-3">
+						<input type="text"
+							class="form-control
+									custom-margin"
+							placeholder="Job Title">
+					</div>
+                    <div class="mb-3">
+						<input type="date"
+							class="form-control
+									custom-margin"
+							placeholder="Application Date Submitted">
+					</div>
+                    <div class="mb-3">
+						<input type="text"
+							class="form-control
+									custom-margin"
+							placeholder="Organization">
+					</div>
+                    <div class="mb-3">
+						<input type="file"
+							class="form-control
+									custom-margin"
+							placeholder="Upload Resume" accept="pdf,doc">
+					</div>
+                    <div class="mb-3">
+						<input type="file"
+							class="form-control
+									custom-margin"
+							placeholder="Upload Cover Letter" accept="pdf,doc">
+					</div>
+                </div>
+    </div>
+
+    <fieldset>
+      <legend>Select a Job Status:</legend>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="submit" name="status" value="Submitted" checked />
+        <label class="form-check-label" for="submit">Submitted</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="interview" name="status" value="Interview"/>
+        <label class="form-check-label" for="interview">Interview</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="accepted" name="status" value="Accepted" />
+        <label class="form-check-label" for="accepted">Accepted</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" id="rejected" name="status" value="Rejected" />
+        <label class="form-check-label" for="rejected">Rejected</label>
+      </div>
+</fieldset>
+    <div class="form-example">
+        <input type="submit" value="Update" />
+    </div>
+  </form>
+</div>
+</body>
+</html>
+
