@@ -39,13 +39,6 @@ tfoot td {
   font-weight: bold;
 }
 
-form.form-example {
-  display: table;
-}
-
-div.form-example {
-  display: table-row;
-}
 label,
 textarea {
   font-size: 0.8rem;
@@ -73,7 +66,6 @@ input {
 
 label,
 input {
-  display: table-cell;
   margin-bottom: 10px;
 }
 
@@ -89,3 +81,6 @@ label {
 			margin-bottom: 30px;
 			color: green;
 		}
+.flex {
+display: flex;
+}
