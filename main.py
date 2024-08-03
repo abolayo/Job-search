@@ -65,7 +65,7 @@ def add_job():
             title, organization, application_submit_date, resume, cover_letter,
             last_update_date, status, comments, company_review
         ]
-        with open('title-data.csv', 'a', encoding="utf8", newline='') as csv_file:
+        with open('job_listings.csv', 'a', encoding="utf8", newline='') as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(fieldnames)
         return render_template('add.html', form=JobForm(formdata=None))

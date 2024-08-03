@@ -16,7 +16,7 @@
             <tr>
                 <th scope="col">{% for name in jobs[i] %}</th>
                     {% if 'https' in name %}
-                       <th><a href = '{{ name }}'>Maps Link</a></th>
+                       <th><a href = '{{ name }}'>Location Link</a></th>
                     {% else %}
                         <th> {{ name }}</th>
                     {% endif %}
