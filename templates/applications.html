@@ -1,0 +1,39 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Applied Job Openings{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>All Applications</h1>
+
+	  <table class="table table-striped table-dark">
+          <tbody>
+            {% for i in range(jobs|length) %}
+            <tr>
+                <th scope="col">{% for name in jobs[i] %}</th>
+                    {% if 'https' in name %}
+                       <th><a href = '{{ name }}'>Maps Link</a></th>
+                    {% else %}
+                        <th> {{ name }}</th>
+                    {% endif %}
+            {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+
+          <!-- This is where you will write the code to render a Bootstrap 
+          Table that contains all the information from the 
+          cafe-data.csv file. -->
+
+       <p><a href="/" >Return to index page</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
