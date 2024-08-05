@@ -17,8 +17,11 @@
                 <th scope="col">{% for name in jobs[i] %}</th>
                     {% if 'https' in name %}
                        <th><a href = '{{ name }}'>Location Link</a></th>
+                    {% elif name == '' %}
+                        <th>NIL</th>
                     {% else %}
                         <th> {{ name }}</th>
+
                     {% endif %}
             {% endfor %}
             </tr>
