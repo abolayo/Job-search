@@ -6,7 +6,8 @@ from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, DateField
 from wtforms.validators import DataRequired, URL
-import csv
+
+#import csv
 
 # Flask APP - Bootstrap - SQLAlchemy Code Config
 app = Flask(__name__)
@@ -34,14 +35,15 @@ class Career(db.Model):
         return '<Title %r>' % self.title
 
 
-with app.app_context():
-    db.create_all()
-    ##CREATE RECORD
-    new_book = Career(title='Cleaner', organization='House KSA', submit_date=datetime(2024, 3, 3),
-                      resume='https://docs.google.com/document', cover_letter='https://drive.google.com/drive/my-drive',
-                      update_date=datetime(2024,8, 5), status='Employed', comments='Beautiful', company_review='✘✘✘✘✘')
-    db.session.add(new_book)
-    db.session.commit()
+#
+# with app.app_context():
+#     db.create_all()
+#     ##CREATE RECORD
+#     new_job = Career(title='Cleaner', organization='House KSA', submit_date=datetime(2024, 3, 3),
+#                      resume='https://docs.google.com/document', cover_letter='https://drive.google.com/drive/my-drive',
+#                      update_date=datetime(2024, 8, 5), status='Employed', comments='Beautiful', company_review='✘✘✘✘✘')
+#     db.session.add(new_job)
+#     db.session.commit()
 
 
 # #sqlite database
@@ -76,7 +78,7 @@ class JobForm(FlaskForm):
     company_review = SelectField('Company Rating',
                                  choices=['Choose a Option..', '✘', '✘✘', '✘✘✘', '✘✘✘✘', '✘✘✘✘✘'],
                                  validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Add')
 
 
 # Exercise:
@@ -107,28 +109,52 @@ def add_job():
         status = request.form['status']
         comments = request.form['comments']
         company_review = request.form['company_review']
-        fieldnames = [
-            title, organization, application_submit_date, resume, cover_letter,
-            last_update_date, status, comments, company_review
-        ]
-        with open('job_listings.csv', 'a', encoding="utf8", newline='') as csv_file:
-            writer = csv.writer(csv_file, delimiter=',')
-            writer.writerow(fieldnames)
-        return render_template('add.html', form=JobForm(formdata=None))
-    # Exercise:
-    # Make the form write a new row into title-data.csv
-    # with   if form.validate_on_submit()
+        # fieldnames = [
+        #     title, organization, application_submit_date, resume, cover_letter,
+        #     last_update_date, status, comments, company_review
+        # ]
+        # #write to csv
+        # with open('job_listings.csv', 'a', encoding="utf8", newline='') as csv_file:
+        #     writer = csv.writer(csv_file, delimiter=',')
+        #     writer.writerow(fieldnames)
+        # return render_template('add.html', form=JobForm(formdata=None))
+
+        #add to database
+        with app.app_context():
+            db.create_all()
+            ##CREATE RECORD
+            new_job = Career(title=title, organization=organization, submit_date=datetime(2024, 3, 3),
+                             resume=resume,
+                             cover_letter=cover_letter,
+                             update_date=datetime(2024, 8, 5), status=status, comments=comments,
+                             company_review=company_review)
+            db.session.add(new_job)
+            db.session.commit()
     return render_template('add.html', form=form)
 
 
 @app.route('/applications', methods=["GET", "POST"])
 def jobs():
-    with open('job_listings.csv', encoding="utf8", newline='') as csv_file:
-        csv_data = csv.reader(csv_file, delimiter=',')
-        list_of_rows = []
-        for row in csv_data:
-            list_of_rows.append(row)
-    return render_template('applications.html', jobs=list_of_rows)
+    # #listings from csv file
+    # with open('job_listings.csv', encoding="utf8", newline='') as csv_file:
+    #     csv_data = csv.reader(csv_file, delimiter=',')
+    #     list_of_rows = []
+    #     for row in csv_data:
+    #         list_of_rows.append(row)
+    with app.app_context():
+        database = db.session.query(Career).all()
+        return render_template('read.html', jobs=database)
+
+
+@app.route("/delete", methods=['GET', 'POST'])
+def delete():
+    job_id = request.args.get('Career.id')
+    print(job_id)
+    # DELETE A RECORD BY ID
+    entry_to_delete = Career.query.get(job_id)
+    db.session.delete(entry_to_delete)
+    db.session.commit()
+    return render_template("index.html")
 
 
 if __name__ == '__main__':

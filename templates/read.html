@@ -15,18 +15,32 @@
               {% if jobs == []: %}
                 <p>Library is empty.</p>
               {% endif %}
-
-            {% for i in range(jobs|length) %}
+              <tr>
+    <th>Title</th>
+                    <th>Organization</th>
+                    <th>Submit date</th>
+                    <th>Update date</th>
+                    <th>Resume</th>
+                    <th>Cover letter</th>
+                    <th>Comments</th>
+                    <th>Status</th>
+                    <th>Company review</th>
+              </tr>
             <tr>
-                <th scope="col">{% for name in jobs[i] %}</th>
-                    {% if 'https' in name %}
-                       <th><a href = '{{ name }}'>Location Link</a></th>
-                    {% elif name == '' %}
-                        <th>NIL</th>
-                    {% else %}
-                        <th> {{ name }}</th>
-                    {% endif %}
-            {% endfor %}
+                <th scope="col">{% for name in jobs%}</th>
+
+            </tr>
+              <tr>
+                    <th>{{name.title}}</th>
+                    <th>{{name.organization}}</th>
+                    <th>{{name.submit_date}}</th>
+                    <th>{{name.update_date}}</th>
+                    <th><a href = '{{ name.resume }}'>Location Link</a></th>
+                    <th><a href = '{{name.cover_letter}}'>Location Link</a></th>
+                    <th>{{name.comments}}</th>
+                    <th>{{name.status}}</th>
+                    <th>{{name.company_review}}</th>
+
                 <th>
                     <button class="btn btn-info">
                         <a href="{{ url_for('add_job', id=jobs.id) }}">Update entry</a>
@@ -37,9 +51,9 @@
                         <a href="{{ url_for('delete', id=jobs.id) }}">Delete entry</a>
                     </button>
                 </th>
+                  {% endfor %}
             </tr>
-            {% endfor %}
-          </tbody>
+           </tbody>
       </table>
 
           <!-- This is where you will write the code to render a Bootstrap
