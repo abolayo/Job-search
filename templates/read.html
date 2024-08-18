@@ -43,12 +43,12 @@
 
                 <th>
                     <button class="btn btn-info">
-                        <a href="{{ url_for('add_job', id=jobs.id) }}">Update entry</a>
+                        <a href="{{ url_for('add_job', id=name.id) }}">Update entry</a>
                     </button>
                 </th>
                 <th>
                     <button class="btn btn-danger">
-                        <a href="{{ url_for('delete', id=jobs.id) }}">Delete entry</a>
+                        <a href="{{ url_for('delete', id=name.id) }}">Delete entry</a>
                     </button>
                 </th>
                   {% endfor %}

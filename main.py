@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
@@ -123,13 +123,18 @@ def add_job():
         with app.app_context():
             db.create_all()
             ##CREATE RECORD
-            new_job = Career(title=title, organization=organization, submit_date=datetime(2024, 3, 3),
+            new_job = Career(title=title, organization=organization,
+                             submit_date=datetime.strptime(application_submit_date, '%Y-%m-%d'),
                              resume=resume,
                              cover_letter=cover_letter,
-                             update_date=datetime(2024, 8, 5), status=status, comments=comments,
+                             update_date=datetime.strptime(last_update_date, '%Y-%m-%d'),
+                             status=status, comments=comments,
                              company_review=company_review)
             db.session.add(new_job)
             db.session.commit()
+
+            # replace this with an insert into whatever database you're using
+            return redirect("applications")
     return render_template('add.html', form=form)
 
 
@@ -153,6 +158,17 @@ def delete():
     # DELETE A RECORD BY ID
     entry_to_delete = Career.query.get(job_id)
     db.session.delete(entry_to_delete)
+    db.session.commit()
+    return render_template("index.html")
+
+
+@app.route("/update", methods=['GET', 'POST'])
+def update():
+    job_id = request.args.get('Career.id')
+    print(job_id)
+    # DELETE A RECORD BY ID
+    entry_to_update = Career.query.get(job_id)
+    db.session.update(entry_to_update)
     db.session.commit()
     return render_template("index.html")
 
