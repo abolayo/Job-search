@@ -1,0 +1,21 @@
+{% extends 'bootstrap/base.html' %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='style.css')}}">
+{% endblock %}
+{% block title %}Delete Entry{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <div class="container">
+  <h1 class="display-4">☕️ Delete Entry 💻</h1>
+  <p class="lead">Want your job search applications to be well organized and with ease of tracking?</p>
+  <hr class="my-4">
+  <p>You've found the right place! Grap a cup of coffee! Monitor your job applications, interviews, and offers in one central location.</p>
+  <a class="btn btn-danger btn-lg" href="{{ url_for('jobs') }} " role="button">Delete Entry!</a>
+
+</div>
+    </div>
+
+{% endblock %}

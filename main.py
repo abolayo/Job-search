@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, DateField
 from wtforms.validators import DataRequired, URL
 
-#import csv
+# Import csv
 
 # Flask APP - Bootstrap - SQLAlchemy Code Config
 app = Flask(__name__)
@@ -18,7 +18,7 @@ Bootstrap(app)
 db = SQLAlchemy(app)
 
 
-#CREATE DB
+# CREATE DB
 class Career(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
@@ -32,18 +32,14 @@ class Career(db.Model):
     comments = db.Column(db.String(120), nullable=False)
 
     def __repr__(self):
-        return '<Title %r>' % self.title
+        return '<id %r>' % self.id
 
 
 #
-# with app.app_context():
-#     db.create_all()
-#     ##CREATE RECORD
-#     new_job = Career(title='Cleaner', organization='House KSA', submit_date=datetime(2024, 3, 3),
-#                      resume='https://docs.google.com/document', cover_letter='https://drive.google.com/drive/my-drive',
-#                      update_date=datetime(2024, 8, 5), status='Employed', comments='Beautiful', company_review='✘✘✘✘✘')
-#     db.session.add(new_job)
-#     db.session.commit()
+# with app.app_context(): db.create_all() ##CREATE RECORD new_job = Career(title='Cleaner', organization='House KSA',
+# submit_date=datetime(2024, 3, 3), resume='https://docs.google.com/document',
+# cover_letter='https://drive.google.com/drive/my-drive', update_date=datetime(2024, 8, 5), status='Employed',
+# comments='Beautiful', company_review='✘✘✘✘✘') db.session.add(new_job) db.session.commit()
 
 
 # #sqlite database
@@ -82,9 +78,9 @@ class JobForm(FlaskForm):
 
 
 # Exercise:
-# add: Location URL, open time, closing time, coffee rating, wifi rating, power outlet rating fields
-# make coffee/wifi/power a select element with choice of 0 to 5.
-#e.g. You could use emojis ☕️/💪/✘/🔌
+# add: Location URL, open time, closing time, coffee rating, Wi-Fi rating, power outlet rating fields
+# make coffee/Wi-Fi/power a select element with choice of 0 to 5.
+# e.g. You could use emojis ☕️/💪/✘/🔌
 # make all fields required except submit
 # use a validator to check that the URL field has a URL entered.
 # ---------------------------------------------------------------------------
@@ -119,10 +115,10 @@ def add_job():
         #     writer.writerow(fieldnames)
         # return render_template('add.html', form=JobForm(formdata=None))
 
-        #add to database
+        # add to database
         with app.app_context():
             db.create_all()
-            ##CREATE RECORD
+            # CREATE RECORD
             new_job = Career(title=title, organization=organization,
                              submit_date=datetime.strptime(application_submit_date, '%Y-%m-%d'),
                              resume=resume,
@@ -151,26 +147,21 @@ def jobs():
         return render_template('read.html', jobs=database)
 
 
-@app.route("/delete", methods=['GET', 'POST'])
-def delete():
-    job_id = request.args.get('Career.id')
-    print(job_id)
-    # DELETE A RECORD BY ID
+@app.route('/delete/<int:job_id>', methods=['GET', 'POST'])
+def delete(job_id):
     entry_to_delete = Career.query.get(job_id)
     db.session.delete(entry_to_delete)
     db.session.commit()
-    return render_template("index.html")
+    return render_template("delete.html", delete=job_id)
 
 
-@app.route("/update", methods=['GET', 'POST'])
-def update():
-    job_id = request.args.get('Career.id')
-    print(job_id)
+@app.route("/update/<int:job_id>/", methods=['GET', 'POST'])
+def update(job_id):
     # DELETE A RECORD BY ID
     entry_to_update = Career.query.get(job_id)
     db.session.update(entry_to_update)
     db.session.commit()
-    return render_template("index.html")
+    return render_template("index.html", job_id=job_id)
 
 
 if __name__ == '__main__':
