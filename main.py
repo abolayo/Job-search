@@ -159,18 +159,16 @@ def delete(job_id):
 def edit():
     if request.method == "POST":
         # UPDATE RECORD
-        job_id = request.form['job_id']
+        job_id = request.form['id']
         job_to_update = Career.query.get(job_id)
-        print(job_to_update, job_id)
         job_to_update.last_update_date = request.form['last_update_date']
         job_to_update.company_review = request.form['company_review']
         job_to_update.status = request.form['status']
         job_to_update.comments = request.form['comments']
         db.session.commit()
         return redirect(url_for('home'))
-    job_id = request.args.get('id')
+    job_id = request.args.get('job_id')
     job_selected = Career.query.get(job_id)
-    print(job_selected, job_id)
     return render_template("edit_data.html", name=job_selected)
 
 
