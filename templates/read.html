@@ -3,7 +3,7 @@
 {% block title %}Applied Job Openings{% endblock %}
 
 {% block content %}
-#using the csv file
+
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
@@ -43,7 +43,7 @@
 
                 <th>
                     <button class="btn btn-info">
-                        <a href="{{ url_for('add_job', job_id=name.id) }}">Update entry</a>
+                        <a href="{{ url_for('edit', job_id=name.id) }}">Update entry</a>
                     </button>
                 </th>
                 <th>

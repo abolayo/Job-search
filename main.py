@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
@@ -155,13 +155,23 @@ def delete(job_id):
     return render_template("delete.html", delete=job_id)
 
 
-@app.route("/update/<int:job_id>/", methods=['GET', 'POST'])
-def update(job_id):
-    # DELETE A RECORD BY ID
-    entry_to_update = Career.query.get(job_id)
-    db.session.update(entry_to_update)
-    db.session.commit()
-    return render_template("index.html", job_id=job_id)
+@app.route("/edit", methods=['GET', 'POST'])
+def edit():
+    if request.method == "POST":
+        # UPDATE RECORD
+        job_id = request.form['job_id']
+        job_to_update = Career.query.get(job_id)
+        print(job_to_update, job_id)
+        job_to_update.last_update_date = request.form['last_update_date']
+        job_to_update.company_review = request.form['company_review']
+        job_to_update.status = request.form['status']
+        job_to_update.comments = request.form['comments']
+        db.session.commit()
+        return redirect(url_for('home'))
+    job_id = request.args.get('id')
+    job_selected = Career.query.get(job_id)
+    print(job_selected, job_id)
+    return render_template("edit_data.html", name=job_selected)
 
 
 if __name__ == '__main__':

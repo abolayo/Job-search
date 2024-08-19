@@ -1,0 +1,56 @@
+
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Applied Job Openings{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>Edit Input</h1>
+
+	  <form class="table table-striped table-dark" action="{{ url_for('edit') }}"  method="POST">
+         <p >Update date: {{name.last_update_date}}</p><br>
+
+          <p >Status: {{name.status}}</p><br>
+
+          <p >Comments: {{name.comments}}</p><br>
+
+          <p> Company review: {{name.company_review}}</p>
+
+          <input hidden="hidden" name="id" value="{{name.id}}">
+          <input type="date" name="last_update_date" placeholder="date"><br>
+          <input type="text" name="status" placeholder="Status"><br>
+          <input type="text" name="comments" placeholder="Comment"><br>
+          <input type="text" name="company_review" placeholder="Review"><br>
+          <button type="submit">Update Data</button>
+      </form>
+
+          <!-- This is where you will write the code to render a Bootstrap
+          Table that contains all the information from the
+          cafe-data.csv file. -->
+    </div>
+    <div class="row">
+         <div class="col">
+                    <p>
+                        <button class="btn btn">
+                            <a href="/" >Return to index page</a>
+                        </button>
+                    </p>
+         </div>
+        <div class="col">
+                   <p>
+                       <button class="btn btn">
+                           <a href="/add" >Add a new application</a>
+                       </button>
+                   </p>
+        </div>
+    </div>
+
+
+  </div>
+</div>
+
+{% endblock %}
