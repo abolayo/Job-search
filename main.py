@@ -161,7 +161,7 @@ def edit():
         # UPDATE RECORD
         job_id = request.form['id']
         job_to_update = Career.query.get(job_id)
-        job_to_update.last_update_date = request.form['last_update_date']
+        job_to_update.update_date = datetime.strptime(request.form['last_update_date'],'%Y-%m-%d')
         job_to_update.company_review = request.form['company_review']
         job_to_update.status = request.form['status']
         job_to_update.comments = request.form['comments']
